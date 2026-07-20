@@ -174,7 +174,7 @@ function SmartBackground() {
 }
 
 // ============================================================
-// 3. شاشة الترحيب (معدلة - min-h-screen)
+// 3. شاشة الترحيب (للشاشات الكبيرة فقط)
 // ============================================================
 function WelcomeScreen({ onStart }) {
   const [userCount, setUserCount] = useState(1234);
@@ -192,10 +192,10 @@ function WelcomeScreen({ onStart }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -30 }}
       transition={{ duration: 0.5 }}
-      className="flex flex-col items-center justify-center min-h-[80vh] py-8 text-center px-4 relative z-10"
+      className="flex flex-col items-center justify-center h-[calc(100vh-120px)] text-center px-4 relative z-10"
     >
       <div 
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-20 animate-pulse-custom"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full opacity-20 animate-pulse-custom"
         style={{ 
           background: `radial-gradient(circle, ${COLORS.brand}40 0%, transparent 70%)`,
         }} 
@@ -218,7 +218,7 @@ function WelcomeScreen({ onStart }) {
           <img 
             src="/logo.png" 
             alt="SmartLab Logo" 
-            className="h-28 md:h-36 w-auto relative z-10 drop-shadow-[0_0_40px_rgba(23,145,158,0.3)]"
+            className="h-32 md:h-40 w-auto relative z-10 drop-shadow-[0_0_40px_rgba(23,145,158,0.3)]"
           />
         </div>
       </motion.div>
@@ -227,7 +227,7 @@ function WelcomeScreen({ onStart }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.6 }}
-        className="text-3xl md:text-5xl font-extrabold mb-3 relative z-10"
+        className="text-4xl md:text-6xl font-extrabold mb-4 relative z-10"
         style={{ color: COLORS.text }}
       >
         تشريح أساسيات الشبكات 
@@ -235,7 +235,7 @@ function WelcomeScreen({ onStart }) {
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.8, type: 'spring' }}
-          className="inline-block mr-2 text-4xl md:text-6xl"
+          className="inline-block mr-2 text-5xl md:text-7xl"
         >
           🔥
         </motion.span>
@@ -245,7 +245,7 @@ function WelcomeScreen({ onStart }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.6, duration: 0.6 }}
-        className="text-base md:text-xl mb-4 relative z-10 px-4"
+        className="text-lg md:text-xl mb-6 relative z-10"
         style={{ color: COLORS.textSecondary }}
       >
         90% من المهندسين بيوقعوا بهالأسئلة. انت منهم؟
@@ -255,7 +255,7 @@ function WelcomeScreen({ onStart }) {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.8, duration: 0.5 }}
-        className="flex items-center gap-3 mb-8 px-4 py-2 rounded-full relative z-10"
+        className="flex items-center gap-3 mb-10 px-6 py-3 rounded-full relative z-10"
         style={{ 
           backgroundColor: `${COLORS.cardBg}80`, 
           border: `1px solid ${COLORS.border}`,
@@ -263,13 +263,13 @@ function WelcomeScreen({ onStart }) {
         }}
       >
         <FaChartPie style={{ color: COLORS.brand }} />
-        <span style={{ color: COLORS.textSecondary }} className="text-sm md:text-base">
+        <span style={{ color: COLORS.textSecondary }}>
           <motion.span
             key={userCount}
             initial={{ scale: 1.3, color: COLORS.brand }}
             animate={{ scale: 1, color: COLORS.textSecondary }}
             transition={{ duration: 0.3 }}
-            className="inline-block font-bold min-w-[40px]"
+            className="inline-block font-bold min-w-[50px]"
             style={{ color: COLORS.brand }}
           >
             📊 {userCount.toLocaleString()}
@@ -294,7 +294,7 @@ function WelcomeScreen({ onStart }) {
           ease: "easeInOut"
         }}
         onClick={onStart}
-        className="px-8 py-4 rounded-2xl text-lg md:text-xl font-bold transition-all duration-300 relative z-10"
+        className="px-10 py-5 rounded-2xl text-xl font-bold transition-all duration-300 relative z-10"
         style={{ 
           backgroundColor: COLORS.brand, 
           color: COLORS.text,
@@ -309,7 +309,7 @@ function WelcomeScreen({ onStart }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2 }}
-        className="flex items-center gap-2 mt-4 relative z-10 text-sm md:text-base"
+        className="flex items-center gap-2 mt-6 relative z-10"
         style={{ color: COLORS.textSecondary }}
       >
         <FaClock />
@@ -320,7 +320,7 @@ function WelcomeScreen({ onStart }) {
 }
 
 // ============================================================
-// 4. شاشة السؤال (معدلة - min-h-[80vh])
+// 4. شاشة السؤال
 // ============================================================
 function QuestionScreen({ question, currentIndex, total, onAnswer, timeLeft }) {
   const [selected, setSelected] = useState(null);
@@ -353,7 +353,7 @@ function QuestionScreen({ question, currentIndex, total, onAnswer, timeLeft }) {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -50 }}
       transition={{ duration: 0.4 }}
-      className="flex flex-col items-center justify-center min-h-[80vh] py-8 px-4 w-full max-w-3xl mx-auto relative z-10"
+      className="flex flex-col items-center justify-center h-[calc(100vh-120px)] px-4 w-full max-w-3xl mx-auto relative z-10"
     >
       <div className="w-full mb-6">
         <div className="flex justify-between text-sm mb-2" style={{ color: COLORS.textSecondary }}>
@@ -376,7 +376,7 @@ function QuestionScreen({ question, currentIndex, total, onAnswer, timeLeft }) {
         </div>
       </div>
 
-      <div className="w-full p-5 md:p-6 rounded-2xl" style={{ backgroundColor: COLORS.cardBg, border: `1px solid ${COLORS.border}` }}>
+      <div className="w-full p-6 rounded-2xl" style={{ backgroundColor: COLORS.cardBg, border: `1px solid ${COLORS.border}` }}>
         <div className="flex items-center gap-3 mb-4">
           <span className="text-2xl" style={{ color: COLORS.brand }}>{question.icon}</span>
           <span className="text-sm font-semibold px-3 py-1 rounded-full" style={{ backgroundColor: `${COLORS.brand}20`, color: COLORS.brand }}>
@@ -384,7 +384,7 @@ function QuestionScreen({ question, currentIndex, total, onAnswer, timeLeft }) {
           </span>
         </div>
         
-        <h2 className="text-lg md:text-xl font-bold mb-6 text-right" style={{ color: COLORS.text }}>
+        <h2 className="text-xl md:text-2xl font-bold mb-6 text-right" style={{ color: COLORS.text }}>
           {question.question}
         </h2>
         
@@ -460,7 +460,7 @@ function QuestionScreen({ question, currentIndex, total, onAnswer, timeLeft }) {
 }
 
 // ============================================================
-// 5. شاشة النتيجة (معدلة - min-h-[80vh])
+// 5. شاشة النتيجة
 // ============================================================
 function ResultScreen({ score, answers, onRestart, onContinue }) {
   const correctCount = answers.filter(Boolean).length;
@@ -487,15 +487,15 @@ function ResultScreen({ score, answers, onRestart, onContinue }) {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -30 }}
-      className="flex flex-col items-center justify-center min-h-[80vh] py-8 px-4 w-full max-w-3xl mx-auto relative z-10"
+      className="flex flex-col items-center justify-center h-[calc(100vh-120px)] px-4 w-full max-w-3xl mx-auto relative z-10"
     >
-      <div className="w-full p-5 md:p-6 rounded-2xl" style={{ backgroundColor: COLORS.cardBg, border: `1px solid ${COLORS.border}` }}>
-        <h2 className="text-2xl md:text-3xl font-bold text-center mb-6" style={{ color: COLORS.text }}>
+      <div className="w-full p-6 rounded-2xl" style={{ backgroundColor: COLORS.cardBg, border: `1px solid ${COLORS.border}` }}>
+        <h2 className="text-3xl font-bold text-center mb-6" style={{ color: COLORS.text }}>
           نتيجة تشريح الأساسيات ✅
         </h2>
         
         <div className="flex flex-col items-center mb-6">
-          <div className="relative w-32 h-32 md:w-40 md:h-40">
+          <div className="relative w-40 h-40">
             <svg className="w-full h-full" viewBox="0 0 120 120">
               <circle cx="60" cy="60" r="54" fill="none" stroke={COLORS.border} strokeWidth="12" />
               <motion.circle
@@ -511,8 +511,8 @@ function ResultScreen({ score, answers, onRestart, onContinue }) {
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-2xl md:text-3xl font-bold" style={{ color: COLORS.text }}>{percentage}%</span>
-              <span className="text-xs md:text-sm" style={{ color: COLORS.textSecondary }}>{levelEmoji} {level}</span>
+              <span className="text-3xl font-bold" style={{ color: COLORS.text }}>{percentage}%</span>
+              <span className="text-sm" style={{ color: COLORS.textSecondary }}>{levelEmoji} {level}</span>
             </div>
           </div>
         </div>
@@ -532,9 +532,9 @@ function ResultScreen({ score, answers, onRestart, onContinue }) {
         
         {weakTopics.length > 0 && (
           <div className="mb-6 p-4 rounded-xl" style={{ backgroundColor: `${COLORS.error}10`, border: `1px solid ${COLORS.error}30` }}>
-            <h3 className="font-bold mb-2 text-sm md:text-base" style={{ color: COLORS.error }}>⚠️ الثغرات المكتشفة</h3>
+            <h3 className="font-bold mb-2" style={{ color: COLORS.error }}>⚠️ الثغرات المكتشفة</h3>
             {weakTopics.map((topic, idx) => (
-              <div key={idx} className="flex items-center gap-2 text-xs md:text-sm" style={{ color: COLORS.textSecondary }}>
+              <div key={idx} className="flex items-center gap-2 text-sm" style={{ color: COLORS.textSecondary }}>
                 <span>•</span>
                 <span>{topic}</span>
               </div>
@@ -543,15 +543,15 @@ function ResultScreen({ score, answers, onRestart, onContinue }) {
         )}
         
         <div className="mb-6 p-4 rounded-xl" style={{ backgroundColor: `${COLORS.brand}10`, border: `1px solid ${COLORS.brand}30` }}>
-          <h3 className="font-bold mb-3 text-sm md:text-base" style={{ color: COLORS.brand }}>📚 خطة العلاج المقترحة</h3>
+          <h3 className="font-bold mb-3" style={{ color: COLORS.brand }}>📚 خطة العلاج المقترحة</h3>
           <div className="space-y-2">
-            <button className="w-full p-3 rounded-lg text-right font-medium transition-all text-sm md:text-base" style={{ backgroundColor: `${COLORS.brand}20`, color: COLORS.text }}>
+            <button className="w-full p-3 rounded-lg text-right font-medium transition-all" style={{ backgroundColor: `${COLORS.brand}20`, color: COLORS.text }}>
               📖 درس: Subnetting من الصفر لـ CCNA
             </button>
-            <button className="w-full p-3 rounded-lg text-right font-medium transition-all text-sm md:text-base" style={{ backgroundColor: `${COLORS.brand}20`, color: COLORS.text }}>
+            <button className="w-full p-3 rounded-lg text-right font-medium transition-all" style={{ backgroundColor: `${COLORS.brand}20`, color: COLORS.text }}>
               🧪 مختبر: حل مشاكل IP و DHCP
             </button>
-            <button className="w-full p-3 rounded-lg text-right font-medium transition-all text-sm md:text-base" style={{ backgroundColor: `${COLORS.brand}20`, color: COLORS.text }}>
+            <button className="w-full p-3 rounded-lg text-right font-medium transition-all" style={{ backgroundColor: `${COLORS.brand}20`, color: COLORS.text }}>
               💼 سيناريو: عميل ما عنده نت
             </button>
           </div>
@@ -560,14 +560,14 @@ function ResultScreen({ score, answers, onRestart, onContinue }) {
         <div className="flex flex-col sm:flex-row gap-3">
           <button
             onClick={onContinue}
-            className="flex-1 p-3 rounded-xl font-bold transition-all text-sm md:text-base"
+            className="flex-1 p-3 rounded-xl font-bold transition-all"
             style={{ backgroundColor: COLORS.brand, color: COLORS.text }}
           >
             📬 احصل على التقييم الكامل
           </button>
           <button
             onClick={onRestart}
-            className="flex-1 p-3 rounded-xl font-bold transition-all text-sm md:text-base"
+            className="flex-1 p-3 rounded-xl font-bold transition-all"
             style={{ backgroundColor: COLORS.border, color: COLORS.text }}
           >
             🔄 إعادة التشريح
@@ -579,7 +579,7 @@ function ResultScreen({ score, answers, onRestart, onContinue }) {
 }
 
 // ============================================================
-// 6. شاشة النموذج (معدلة - min-h-[80vh])
+// 6. شاشة النموذج
 // ============================================================
 function FormScreen({ onSubmit, onBack }) {
   const [formData, setFormData] = useState({
@@ -607,7 +607,7 @@ function FormScreen({ onSubmit, onBack }) {
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="flex flex-col items-center justify-center min-h-[60vh] py-8 text-center px-4 relative z-10"
+        className="flex flex-col items-center justify-center h-[calc(100vh-120px)] text-center px-4 relative z-10"
       >
         <div className="text-6xl mb-4">✅</div>
         <h2 className="text-2xl font-bold mb-2" style={{ color: COLORS.text }}>
@@ -632,13 +632,13 @@ function FormScreen({ onSubmit, onBack }) {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -30 }}
-      className="flex flex-col items-center justify-center min-h-[80vh] py-8 px-4 w-full max-w-2xl mx-auto relative z-10"
+      className="flex flex-col items-center justify-center h-[calc(100vh-120px)] px-4 w-full max-w-2xl mx-auto relative z-10"
     >
-      <div className="w-full p-5 md:p-6 rounded-2xl" style={{ backgroundColor: COLORS.cardBg, border: `1px solid ${COLORS.border}` }}>
-        <h2 className="text-xl md:text-2xl font-bold text-center mb-2" style={{ color: COLORS.text }}>
+      <div className="w-full p-6 rounded-2xl" style={{ backgroundColor: COLORS.cardBg, border: `1px solid ${COLORS.border}` }}>
+        <h2 className="text-2xl font-bold text-center mb-2" style={{ color: COLORS.text }}>
           📬 احصل على التقييم الكامل
         </h2>
-        <p className="text-center mb-6 text-sm md:text-base" style={{ color: COLORS.textSecondary }}>
+        <p className="text-center mb-6" style={{ color: COLORS.textSecondary }}>
           املأ بياناتك وسنرسل لك 40 سؤالاً تشخيصياً + خطة تعلم مخصصة
         </p>
         
@@ -649,7 +649,7 @@ function FormScreen({ onSubmit, onBack }) {
               type="text"
               placeholder="الاسم الكامل"
               required
-              className="w-full p-3 pr-12 rounded-xl outline-none transition-all text-sm md:text-base"
+              className="w-full p-3 pr-12 rounded-xl outline-none transition-all"
               style={{ backgroundColor: COLORS.background, color: COLORS.text, border: `1px solid ${COLORS.border}` }}
               value={formData.name}
               onChange={(e) => setFormData({...formData, name: e.target.value})}
@@ -662,7 +662,7 @@ function FormScreen({ onSubmit, onBack }) {
               type="email"
               placeholder="البريد الإلكتروني"
               required
-              className="w-full p-3 pr-12 rounded-xl outline-none transition-all text-sm md:text-base"
+              className="w-full p-3 pr-12 rounded-xl outline-none transition-all"
               style={{ backgroundColor: COLORS.background, color: COLORS.text, border: `1px solid ${COLORS.border}` }}
               value={formData.email}
               onChange={(e) => setFormData({...formData, email: e.target.value})}
@@ -674,7 +674,7 @@ function FormScreen({ onSubmit, onBack }) {
             <input
               type="tel"
               placeholder="رقم الهاتف"
-              className="w-full p-3 pr-12 rounded-xl outline-none transition-all text-sm md:text-base"
+              className="w-full p-3 pr-12 rounded-xl outline-none transition-all"
               style={{ backgroundColor: COLORS.background, color: COLORS.text, border: `1px solid ${COLORS.border}` }}
               value={formData.phone}
               onChange={(e) => setFormData({...formData, phone: e.target.value})}
@@ -684,7 +684,7 @@ function FormScreen({ onSubmit, onBack }) {
           <div className="relative">
             <select
               required
-              className="w-full p-3 pr-4 rounded-xl outline-none transition-all appearance-none text-sm md:text-base"
+              className="w-full p-3 pr-4 rounded-xl outline-none transition-all appearance-none"
               style={{ backgroundColor: COLORS.background, color: COLORS.text, border: `1px solid ${COLORS.border}` }}
               value={formData.level}
               onChange={(e) => setFormData({...formData, level: e.target.value})}
@@ -705,7 +705,7 @@ function FormScreen({ onSubmit, onBack }) {
           <button
             type="submit"
             disabled={loading}
-            className="w-full p-3 rounded-xl font-bold transition-all text-sm md:text-base"
+            className="w-full p-3 rounded-xl font-bold transition-all"
             style={{ backgroundColor: COLORS.brand, color: COLORS.text }}
           >
             {loading ? 'جاري الإرسال...' : '🚀 أرسل لي الخطة الكاملة'}
