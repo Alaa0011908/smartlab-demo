@@ -18,12 +18,12 @@ import {
 } from 'react-icons/fa';
 
 // ============================================================
-// 1. هوية المشروع - الألوان والثوابت
+// 1. هوية المشروع - الألوان والثوابت (معدلة حسب مشروعك)
 // ============================================================
 const COLORS = {
   background: '#0A0A0A',
-  brand: '#17919e',
-  brandSecondary: '#e1682e',
+  brand: '#17919e',        // لونك الأساسي
+  brandSecondary: '#e1682e', // لونك الثانوي
   success: '#22C55E',
   error: '#EF4444',
   text: '#FFFFFF',
@@ -164,7 +164,7 @@ function WelcomeScreen({ onStart }) {
         transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
         className="text-6xl mb-6"
       >
-        🧠
+        <img src="/logo.png" alt="SmartLab Logo" className="h-24 w-auto" />
       </motion.div>
       
       <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: COLORS.text }}>
@@ -203,7 +203,7 @@ function WelcomeScreen({ onStart }) {
 }
 
 // ============================================================
-// 3. شاشة السؤال
+// 3. شاشة السؤال (معدلة)
 // ============================================================
 function QuestionScreen({ question, currentIndex, total, onAnswer, timeLeft }) {
   const [selected, setSelected] = useState(null);
@@ -599,7 +599,7 @@ function FormScreen({ onSubmit, onBack }) {
 }
 
 // ============================================================
-// 6. المكون الرئيسي
+// 6. المكون الرئيسي (معدل)
 // ============================================================
 export default function Home() {
   const [step, setStep] = useState('welcome');
@@ -624,14 +624,19 @@ export default function Home() {
     setStep('question');
   };
 
+  // ✅ Handle Answer - تم الإصلاح
   const handleAnswer = (correct) => {
-    setAnswers([...answers, correct]);
-    if (currentQuestion + 1 < QUESTIONS.length) {
-      setCurrentQuestion(currentQuestion + 1);
-    } else {
-      setTimerActive(false);
-      setStep('result');
-    }
+    setAnswers(prev => [...prev, correct]);
+    
+    // انتظر 1.5 ثانية قبل الانتقال للسؤال التالي
+    setTimeout(() => {
+      if (currentQuestion + 1 < QUESTIONS.length) {
+        setCurrentQuestion(prev => prev + 1);
+      } else {
+        setTimerActive(false);
+        setStep('result');
+      }
+    }, 1500);
   };
 
   const handleRestart = () => {
@@ -655,8 +660,7 @@ export default function Home() {
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-2">
-            <span className="text-2xl">🧠</span>
-            <span className="text-xl font-bold" style={{ color: COLORS.brand }}>SmartLab</span>
+            <img src="/logo.png" alt="SmartLab Logo" className="h-10 w-auto" />
           </div>
           {step !== 'welcome' && step !== 'form' && (
             <span className="text-sm" style={{ color: COLORS.textSecondary }}>
