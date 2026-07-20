@@ -147,18 +147,57 @@ const QUESTIONS = [
 ];
 
 // ============================================================
-// 2. شاشة الترحيب (معدلة - بدون styled-jsx)
+// 2. مكون الخلفية المتحركة الذكية
+// ============================================================
+function SmartBackground() {
+  return (
+    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+      {/* نقاط متحركة */}
+      <div className="absolute top-[10%] left-[8%] w-1.5 h-1.5 rounded-full animate-float" style={{ backgroundColor: COLORS.brand, animationDelay: '0s' }} />
+      <div className="absolute top-[20%] right-[15%] w-2 h-2 rounded-full animate-float" style={{ backgroundColor: COLORS.brandSecondary, animationDelay: '1.5s' }} />
+      <div className="absolute bottom-[30%] left-[12%] w-1 h-1 rounded-full animate-float" style={{ backgroundColor: COLORS.textSecondary, animationDelay: '3s' }} />
+      <div className="absolute top-[60%] right-[8%] w-1.5 h-1.5 rounded-full animate-float" style={{ backgroundColor: COLORS.brand, animationDelay: '0.8s' }} />
+      <div className="absolute bottom-[15%] right-[25%] w-2.5 h-2.5 rounded-full animate-float" style={{ backgroundColor: COLORS.brandSecondary, animationDelay: '2.2s' }} />
+      <div className="absolute top-[40%] left-[20%] w-1 h-1 rounded-full animate-float" style={{ backgroundColor: COLORS.textSecondary, animationDelay: '4s' }} />
+      <div className="absolute bottom-[50%] right-[30%] w-1.5 h-1.5 rounded-full animate-float" style={{ backgroundColor: COLORS.brand, animationDelay: '1.2s' }} />
+      <div className="absolute top-[80%] left-[30%] w-2 h-2 rounded-full animate-float" style={{ backgroundColor: COLORS.brandSecondary, animationDelay: '2.8s' }} />
+      
+      {/* خطوط شبكية خفيفة */}
+      <svg className="absolute inset-0 w-full h-full opacity-[0.03]">
+        <defs>
+          <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" strokeWidth="0.5" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid)" />
+      </svg>
+    </div>
+  );
+}
+
+// ============================================================
+// 3. شاشة الترحيب (مع عداد المستخدمين)
 // ============================================================
 function WelcomeScreen({ onStart }) {
+  // ✅ عداد المستخدمين المتزايد
+  const [userCount, setUserCount] = useState(1234);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setUserCount(prev => prev + Math.floor(Math.random() * 2) + 1);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -30 }}
       transition={{ duration: 0.5 }}
-      className="flex flex-col items-center justify-center min-h-[70vh] text-center px-4 relative overflow-hidden"
+      className="flex flex-col items-center justify-center min-h-[70vh] text-center px-4 relative z-10"
     >
-      {/* خلفية متحركة (دائرية) - باستخدام Tailwind class */}
+      {/* خلفية متحركة (دائرية) */}
       <div 
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-20 animate-pulse-custom"
         style={{ 
@@ -217,6 +256,7 @@ function WelcomeScreen({ onStart }) {
         90% من المهندسين بيوقعوا بهالأسئلة. انت منهم؟
       </motion.p>
 
+      {/* ✅ عداد المستخدمين المتزايد */}
       <motion.div 
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -231,13 +271,16 @@ function WelcomeScreen({ onStart }) {
         <FaChartPie style={{ color: COLORS.brand }} />
         <span style={{ color: COLORS.textSecondary }}>
           <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
+            key={userCount}
+            initial={{ scale: 1.3, color: COLORS.brand }}
+            animate={{ scale: 1, color: COLORS.textSecondary }}
+            transition={{ duration: 0.3 }}
+            className="inline-block font-bold min-w-[50px]"
+            style={{ color: COLORS.brand }}
           >
-            📊 1,234
+            📊 {userCount.toLocaleString()}
           </motion.span>
-          <span className="ml-1">مهندس اختبروا مهاراتهم</span>
+          <span className="mr-1">مهندس اختبروا مهاراتهم</span>
         </span>
       </motion.div>
 
@@ -283,14 +326,13 @@ function WelcomeScreen({ onStart }) {
 }
 
 // ============================================================
-// 3. شاشة السؤال (معدلة مع useEffect)
+// 4. شاشة السؤال
 // ============================================================
 function QuestionScreen({ question, currentIndex, total, onAnswer, timeLeft }) {
   const [selected, setSelected] = useState(null);
   const [showExplanation, setShowExplanation] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
 
-  // ✅ إعادة تعيين الحالة عند تغيير السؤال
   useEffect(() => {
     setSelected(null);
     setShowExplanation(false);
@@ -317,7 +359,7 @@ function QuestionScreen({ question, currentIndex, total, onAnswer, timeLeft }) {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -50 }}
       transition={{ duration: 0.4 }}
-      className="flex flex-col items-center justify-center min-h-[70vh] px-4 w-full max-w-3xl mx-auto"
+      className="flex flex-col items-center justify-center min-h-[70vh] px-4 w-full max-w-3xl mx-auto relative z-10"
     >
       <div className="w-full mb-6">
         <div className="flex justify-between text-sm mb-2" style={{ color: COLORS.textSecondary }}>
@@ -424,7 +466,7 @@ function QuestionScreen({ question, currentIndex, total, onAnswer, timeLeft }) {
 }
 
 // ============================================================
-// 4. شاشة النتيجة
+// 5. شاشة النتيجة
 // ============================================================
 function ResultScreen({ score, answers, onRestart, onContinue }) {
   const correctCount = answers.filter(Boolean).length;
@@ -451,7 +493,7 @@ function ResultScreen({ score, answers, onRestart, onContinue }) {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -30 }}
-      className="flex flex-col items-center justify-center min-h-[70vh] px-4 w-full max-w-3xl mx-auto"
+      className="flex flex-col items-center justify-center min-h-[70vh] px-4 w-full max-w-3xl mx-auto relative z-10"
     >
       <div className="w-full p-6 rounded-2xl" style={{ backgroundColor: COLORS.cardBg, border: `1px solid ${COLORS.border}` }}>
         <h2 className="text-3xl font-bold text-center mb-6" style={{ color: COLORS.text }}>
@@ -543,7 +585,7 @@ function ResultScreen({ score, answers, onRestart, onContinue }) {
 }
 
 // ============================================================
-// 5. شاشة النموذج
+// 6. شاشة النموذج
 // ============================================================
 function FormScreen({ onSubmit, onBack }) {
   const [formData, setFormData] = useState({
@@ -571,7 +613,7 @@ function FormScreen({ onSubmit, onBack }) {
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="flex flex-col items-center justify-center min-h-[50vh] text-center px-4"
+        className="flex flex-col items-center justify-center min-h-[50vh] text-center px-4 relative z-10"
       >
         <div className="text-6xl mb-4">✅</div>
         <h2 className="text-2xl font-bold mb-2" style={{ color: COLORS.text }}>
@@ -596,7 +638,7 @@ function FormScreen({ onSubmit, onBack }) {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -30 }}
-      className="flex flex-col items-center justify-center min-h-[70vh] px-4 w-full max-w-2xl mx-auto"
+      className="flex flex-col items-center justify-center min-h-[70vh] px-4 w-full max-w-2xl mx-auto relative z-10"
     >
       <div className="w-full p-6 rounded-2xl" style={{ backgroundColor: COLORS.cardBg, border: `1px solid ${COLORS.border}` }}>
         <h2 className="text-2xl font-bold text-center mb-2" style={{ color: COLORS.text }}>
@@ -681,7 +723,7 @@ function FormScreen({ onSubmit, onBack }) {
 }
 
 // ============================================================
-// 6. المكون الرئيسي
+// 7. المكون الرئيسي
 // ============================================================
 export default function Home() {
   const [step, setStep] = useState('welcome');
@@ -733,8 +775,11 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-4" style={{ backgroundColor: COLORS.background }}>
-      <div className="w-full max-w-4xl">
+    <main className="min-h-screen flex flex-col items-center justify-center p-4 relative" style={{ backgroundColor: COLORS.background }}>
+      {/* ✅ خلفية متحركة ذكية - تظهر في كل الصفحات */}
+      <SmartBackground />
+
+      <div className="w-full max-w-4xl relative z-10">
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-2">
             <img src="/logo.png" alt="SmartLab Logo" className="h-10 w-auto" />
