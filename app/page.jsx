@@ -1,8 +1,9 @@
-// app/page.jsx - النسخة النهائية مع جميع التعديلات
+// app/page.jsx
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import emailjs from '@emailjs/browser';
 import { 
   FaCheckCircle, 
   FaTimesCircle, 
@@ -148,7 +149,7 @@ const QUESTIONS = [
 ];
 
 // ============================================================
-// 2. شاشة الترحيب (مع العداد الحقيقي والعنوان الجديد)
+// 2. شاشة الترحيب
 // ============================================================
 function WelcomeScreen({ onStart }) {
   const [userCount, setUserCount] = useState(1234);
@@ -189,7 +190,6 @@ function WelcomeScreen({ onStart }) {
         <img src="/logo.png" alt="SmartLab Logo" className="h-32 w-auto" />
       </motion.div>
       
-      {/* ✅ العنوان الجديد */}
       <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: COLORS.text }}>
         <span style={{ color: COLORS.brand }}>اكتشف</span> مستواك الحقيقي 
         <br className="block sm:hidden" />
@@ -197,7 +197,6 @@ function WelcomeScreen({ onStart }) {
         <span className="ml-2">🔥</span>
       </h1>
       
-      {/* ✅ النص التعريفي للمنصة */}
       <p className="text-base md:text-lg mb-2 max-w-2xl mx-auto" style={{ color: COLORS.textSecondary }}>
         منصة تعليمية متطورة تعتمد على الذكاء الاصطناعي لتقديم 
         <span style={{ color: COLORS.brand }}> تجارب تعلم مخصصة</span>، 
@@ -205,12 +204,10 @@ function WelcomeScreen({ onStart }) {
         ومحاكاة واقعية.
       </p>
       
-      {/* ✅ النص التحفيزي */}
       <p className="text-lg md:text-xl mb-2 mt-2" style={{ color: COLORS.textSecondary }}>
         90% من المهندسين بيوقعوا بهالأسئلة. انت منهم؟
       </p>
       
-      {/* ✅ عداد حقيقي */}
       <div className="flex items-center gap-2 mt-2 mb-8 px-4 py-2 rounded-full" style={{ backgroundColor: COLORS.cardBg, border: `1px solid ${COLORS.border}` }}>
         <FaChartPie style={{ color: COLORS.brand }} />
         <span style={{ color: COLORS.textSecondary }}>
@@ -218,7 +215,6 @@ function WelcomeScreen({ onStart }) {
         </span>
       </div>
       
-      {/* ✅ زر البداية */}
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -233,7 +229,6 @@ function WelcomeScreen({ onStart }) {
         ابدأ التقييم الذكي 🚀
       </motion.button>
       
-      {/* ✅ المؤقت */}
       <div className="flex items-center gap-2 mt-6" style={{ color: COLORS.textSecondary }}>
         <FaClock />
         <span>⏱️ 60 ثانية فقط</span>
@@ -502,7 +497,7 @@ function ResultScreen({ score, answers, onRestart, onContinue }) {
 }
 
 // ============================================================
-// 5. شاشة النموذج (معدلة)
+// 5. شاشة النموذج (مع EmailJS)
 // ============================================================
 function FormScreen({ onSubmit, onBack }) {
   const [formData, setFormData] = useState({
@@ -520,25 +515,30 @@ function FormScreen({ onSubmit, onBack }) {
     setLoading(true);
     
     try {
-      // ✅ إرسال البيانات إلى الإيميل
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          to: 'alaa001.n@gmail.com',
-          subject: '📊 طلب خطة تعلم كاملة - SmartLab',
-          data: formData
-        })
-      });
+      const templateParams = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone || 'غير مدخل',
+        level: formData.level || 'غير محدد',
+        notes: formData.notes || 'لا توجد ملاحظات',
+        date: new Date().toLocaleString('ar-EG')
+      };
 
-      if (response.ok) {
+      const result = await emailjs.send(
+        'service_6tnbam9',
+        'template_l3wufn3',
+        templateParams,
+        'gL1LG_GCblxmeY1zu'
+      );
+
+      if (result.status === 200) {
         localStorage.setItem('demoUser', JSON.stringify(formData));
         setSubmitted(true);
       } else {
         alert('حدث خطأ في الإرسال. يرجى المحاولة مرة أخرى.');
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error sending email:', error);
       alert('حدث خطأ في الإرسال. يرجى المحاولة مرة أخرى.');
     } finally {
       setLoading(false);
@@ -642,7 +642,6 @@ function FormScreen({ onSubmit, onBack }) {
             </select>
           </div>
 
-          {/* ✅ حقل الملاحظات الجديد */}
           <div className="relative">
             <FaComments className="absolute right-4 top-4" style={{ color: COLORS.textSecondary }} />
             <textarea
