@@ -149,7 +149,7 @@ const QUESTIONS = [
 ];
 
 // ============================================================
-// 2. شاشة الترحيب
+// 2. شاشة الترحيب (معدلة)
 // ============================================================
 function WelcomeScreen({ onStart }) {
   const [userCount, setUserCount] = useState(1234);
@@ -179,7 +179,7 @@ function WelcomeScreen({ onStart }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -30 }}
       transition={{ duration: 0.5 }}
-      className="flex flex-col items-center justify-center min-h-screen text-center px-4"
+      className="flex flex-col items-center justify-center min-h-[calc(100vh-120px)] text-center px-4"
     >
       <motion.div
         initial={{ scale: 0 }}
@@ -271,7 +271,7 @@ function QuestionScreen({ question, currentIndex, total, onAnswer, timeLeft }) {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -50 }}
       transition={{ duration: 0.4 }}
-      className="flex flex-col items-center justify-center min-h-screen px-4 w-full max-w-3xl mx-auto"
+      className="flex flex-col items-center justify-center min-h-[calc(100vh-120px)] px-4 w-full max-w-3xl mx-auto"
     >
       <div className="w-full mb-6">
         <div className="flex justify-between text-sm mb-2" style={{ color: COLORS.textSecondary }}>
@@ -405,7 +405,7 @@ function ResultScreen({ score, answers, onRestart, onContinue }) {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -30 }}
-      className="flex flex-col items-center justify-center min-h-screen px-4 w-full max-w-3xl mx-auto"
+      className="flex flex-col items-center justify-center min-h-[calc(100vh-120px)] px-4 w-full max-w-3xl mx-auto"
     >
       <div className="w-full p-6 rounded-2xl" style={{ backgroundColor: COLORS.cardBg, border: `1px solid ${COLORS.border}` }}>
         <h2 className="text-3xl font-bold text-center mb-6" style={{ color: COLORS.text }}>
@@ -576,7 +576,7 @@ function FormScreen({ onSubmit, onBack }) {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -30 }}
-      className="flex flex-col items-center justify-center min-h-screen px-4 w-full max-w-2xl mx-auto"
+      className="flex flex-col items-center justify-center min-h-[calc(100vh-120px)] px-4 w-full max-w-2xl mx-auto"
     >
       <div className="w-full p-6 rounded-2xl" style={{ backgroundColor: COLORS.cardBg, border: `1px solid ${COLORS.border}` }}>
         <h2 className="text-2xl font-bold text-center mb-2" style={{ color: COLORS.text }}>
