@@ -149,15 +149,15 @@ const QUESTIONS = [
 ];
 
 // ============================================================
-// 2. شاشة الترحيب
+// 2. شاشة الترحيب (مع العداد من 60 و "مهندس وتقني")
 // ============================================================
 function WelcomeScreen({ onStart }) {
-  const [userCount, setUserCount] = useState(1234);
+  const [userCount, setUserCount] = useState(60);
 
   useEffect(() => {
     let count = localStorage.getItem('demoVisitors');
     if (!count) {
-      count = 1234;
+      count = 60;
       localStorage.setItem('demoVisitors', count);
     } else {
       count = parseInt(count, 10);
@@ -211,7 +211,7 @@ function WelcomeScreen({ onStart }) {
       <div className="flex items-center gap-2 mt-2 mb-8 px-4 py-2 rounded-full" style={{ backgroundColor: COLORS.cardBg, border: `1px solid ${COLORS.border}` }}>
         <FaChartPie style={{ color: COLORS.brand }} />
         <span style={{ color: COLORS.textSecondary }}>
-          📊 <strong style={{ color: COLORS.brand }}>{userCount.toLocaleString()}</strong> مهندس اختبروا مهاراتهم
+          📊 <strong style={{ color: COLORS.brand }}>{userCount.toLocaleString()}</strong> مهندس وتقني اختبروا مهاراتهم
         </span>
       </div>
       
@@ -524,7 +524,6 @@ function FormScreen({ onSubmit, onBack }) {
         date: new Date().toLocaleString('ar-EG')
       };
 
-      // ✅ إرسال الإيميل إلى alaa001.n@gmail.com فقط
       const result = await emailjs.send(
         'service_6tnbam9',
         'template_l3wufn3',
