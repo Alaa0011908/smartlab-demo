@@ -1,25 +1,6 @@
-/* app/globals.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* app/globals.css - أضف هذا الكود في نهاية الملف */
 
-@layer base {
-  html {
-    font-family: 'Cairo', system-ui, sans-serif;
-  }
-  body {
-    background-color: #0A0A0A;
-    color: #FFFFFF;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-  }
-  * {
-    box-sizing: border-box;
-  }
-}
-
-/* ✅ حركة النبض للخلفية */
+/* ✅ حركة النبض للخلفية الدائرية */
 @keyframes pulse {
   0%, 100% { 
     transform: translate(-50%, -50%) scale(1); 
@@ -35,21 +16,26 @@
   animation: pulse 3s ease-in-out infinite;
 }
 
-/* تخصيص شريط التمرير */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+/* ✅ حركة النقاط العائمة في الخلفية */
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.3;
+  }
+  25% {
+    transform: translate(10px, -15px) scale(1.2);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-5px, -25px) scale(0.8);
+    opacity: 0.5;
+  }
+  75% {
+    transform: translate(15px, -10px) scale(1.1);
+    opacity: 0.7;
+  }
 }
 
-::-webkit-scrollbar-track {
-  background: #1A1A1A;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #17919e;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #127a86;
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }
