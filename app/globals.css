@@ -19,6 +19,22 @@
   }
 }
 
+/* ✅ حركة النبض للخلفية */
+@keyframes pulse {
+  0%, 100% { 
+    transform: translate(-50%, -50%) scale(1); 
+    opacity: 0.2; 
+  }
+  50% { 
+    transform: translate(-50%, -50%) scale(1.2); 
+    opacity: 0.35; 
+  }
+}
+
+.animate-pulse-custom {
+  animation: pulse 3s ease-in-out infinite;
+}
+
 /* تخصيص شريط التمرير */
 ::-webkit-scrollbar {
   width: 6px;
