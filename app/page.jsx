@@ -18,12 +18,12 @@ import {
 } from 'react-icons/fa';
 
 // ============================================================
-// 1. هوية المشروع - الألوان والثوابت (معدلة حسب مشروعك)
+// 1. هوية المشروع - الألوان والثوابت
 // ============================================================
 const COLORS = {
   background: '#0A0A0A',
-  brand: '#17919e',        // لونك الأساسي
-  brandSecondary: '#e1682e', // لونك الثانوي
+  brand: '#17919e',
+  brandSecondary: '#e1682e',
   success: '#22C55E',
   error: '#EF4444',
   text: '#FFFFFF',
@@ -203,7 +203,7 @@ function WelcomeScreen({ onStart }) {
 }
 
 // ============================================================
-// 3. شاشة السؤال (معدلة)
+// 3. شاشة السؤال
 // ============================================================
 function QuestionScreen({ question, currentIndex, total, onAnswer, timeLeft }) {
   const [selected, setSelected] = useState(null);
@@ -216,10 +216,11 @@ function QuestionScreen({ question, currentIndex, total, onAnswer, timeLeft }) {
     const correct = index === question.correct;
     setIsCorrect(correct);
     setShowExplanation(true);
-    
+
+    // ✅ التأخير الوحيد هنا - 2.5 ثانية
     setTimeout(() => {
       onAnswer(correct);
-    }, 2000);
+    }, 2500);
   };
 
   const progress = ((currentIndex) / total) * 100;
@@ -371,7 +372,6 @@ function ResultScreen({ score, answers, onRestart, onContinue }) {
           نتيجة تشريح الأساسيات ✅
         </h2>
         
-        {/* Score Circle */}
         <div className="flex flex-col items-center mb-6">
           <div className="relative w-40 h-40">
             <svg className="w-full h-full" viewBox="0 0 120 120">
@@ -395,7 +395,6 @@ function ResultScreen({ score, answers, onRestart, onContinue }) {
           </div>
         </div>
         
-        {/* Results Grid */}
         <div className="grid grid-cols-4 gap-2 mb-6">
           {answers.map((correct, idx) => (
             <div key={idx} className="flex flex-col items-center p-2 rounded-lg" style={{ backgroundColor: `${COLORS.border}30` }}>
@@ -409,7 +408,6 @@ function ResultScreen({ score, answers, onRestart, onContinue }) {
           ))}
         </div>
         
-        {/* Weak Topics */}
         {weakTopics.length > 0 && (
           <div className="mb-6 p-4 rounded-xl" style={{ backgroundColor: `${COLORS.error}10`, border: `1px solid ${COLORS.error}30` }}>
             <h3 className="font-bold mb-2" style={{ color: COLORS.error }}>⚠️ الثغرات المكتشفة</h3>
@@ -422,7 +420,6 @@ function ResultScreen({ score, answers, onRestart, onContinue }) {
           </div>
         )}
         
-        {/* Treatment Plan */}
         <div className="mb-6 p-4 rounded-xl" style={{ backgroundColor: `${COLORS.brand}10`, border: `1px solid ${COLORS.brand}30` }}>
           <h3 className="font-bold mb-3" style={{ color: COLORS.brand }}>📚 خطة العلاج المقترحة</h3>
           <div className="space-y-2">
@@ -438,7 +435,6 @@ function ResultScreen({ score, answers, onRestart, onContinue }) {
           </div>
         </div>
         
-        {/* Buttons */}
         <div className="flex flex-col sm:flex-row gap-3">
           <button
             onClick={onContinue}
@@ -599,7 +595,7 @@ function FormScreen({ onSubmit, onBack }) {
 }
 
 // ============================================================
-// 6. المكون الرئيسي (معدل)
+// 6. المكون الرئيسي
 // ============================================================
 export default function Home() {
   const [step, setStep] = useState('welcome');
@@ -624,19 +620,16 @@ export default function Home() {
     setStep('question');
   };
 
-  // ✅ Handle Answer - تم الإصلاح
+  // ✅ دالة معالجة الإجابة - بدون setTimeout (التأخير في handleSelect)
   const handleAnswer = (correct) => {
     setAnswers(prev => [...prev, correct]);
     
-    // انتظر 1.5 ثانية قبل الانتقال للسؤال التالي
-    setTimeout(() => {
-      if (currentQuestion + 1 < QUESTIONS.length) {
-        setCurrentQuestion(prev => prev + 1);
-      } else {
-        setTimerActive(false);
-        setStep('result');
-      }
-    }, 1500);
+    if (currentQuestion + 1 < QUESTIONS.length) {
+      setCurrentQuestion(prev => prev + 1);
+    } else {
+      setTimerActive(false);
+      setStep('result');
+    }
   };
 
   const handleRestart = () => {
@@ -657,7 +650,7 @@ export default function Home() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center p-4" style={{ backgroundColor: COLORS.background }}>
       <div className="w-full max-w-4xl">
-        {/* Header */}
+        {/* Header مع اللوغو */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-2">
             <img src="/logo.png" alt="SmartLab Logo" className="h-10 w-auto" />
